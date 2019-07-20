@@ -13,6 +13,9 @@
     },
     "adoption-ui": {
       "tags": []
+    },
+    "shared-components": {
+      "tags": []
     }
   }
 }
