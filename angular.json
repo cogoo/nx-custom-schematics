@@ -2,7 +2,121 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "",
-  "projects": {},
+  "projects": {
+    "adoption-ui": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "apps/adoption-ui",
+      "sourceRoot": "apps/adoption-ui/src",
+      "prefix": "pet-adoption-system",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/adoption-ui",
+            "index": "apps/adoption-ui/src/index.html",
+            "main": "apps/adoption-ui/src/main.ts",
+            "polyfills": "apps/adoption-ui/src/polyfills.ts",
+            "tsConfig": "apps/adoption-ui/tsconfig.app.json",
+            "assets": [
+              "apps/adoption-ui/src/favicon.ico",
+              "apps/adoption-ui/src/assets"
+            ],
+            "styles": ["apps/adoption-ui/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/adoption-ui/src/environments/environment.ts",
+                  "with": "apps/adoption-ui/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "adoption-ui:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "adoption-ui:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "adoption-ui:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/adoption-ui/tsconfig.app.json",
+              "apps/adoption-ui/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/adoption-ui/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/adoption-ui/jest.config.js",
+            "tsConfig": "apps/adoption-ui/tsconfig.spec.json",
+            "setupFile": "apps/adoption-ui/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "adoption-ui-e2e": {
+      "root": "apps/adoption-ui-e2e",
+      "sourceRoot": "apps/adoption-ui-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/adoption-ui-e2e/cypress.json",
+            "tsConfig": "apps/adoption-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "adoption-ui:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "adoption-ui:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/adoption-ui-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**", "!apps/adoption-ui-e2e/**"]
+          }
+        }
+      }
+    }
+  },
   "cli": {
     "warnings": {
       "typescriptMismatch": false,
@@ -15,6 +129,9 @@
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
-    "@nrwl/angular:library": { "unitTestRunner": "jest" }
-  }
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "adoption-ui"
 }

@@ -7,5 +7,12 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "adoption-ui-e2e": {
+      "tags": []
+    },
+    "adoption-ui": {
+      "tags": []
+    }
+  }
 }
